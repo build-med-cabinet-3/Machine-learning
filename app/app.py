@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Configuration 
 load_dotenv() # To access .env
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config('SQLALCHEMY_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
