@@ -42,3 +42,5 @@ def create_app():
     def get_preds(user_info):
         # return model.predict(user_info)
         return results
+    
+    return app
