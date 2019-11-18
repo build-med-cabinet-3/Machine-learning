@@ -26,9 +26,7 @@ results = {"result_1": {"strain_id": 1, "score": 80},
 model = "pickled_model"
 
 #Home page urls
-@app.route("/#")
 @app.route("/")
-@app.route("/Home")
 def home():
     return render_template('home.html')
 
