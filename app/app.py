@@ -43,6 +43,3 @@ def request():
 def get_preds(user_info):
     # return model.predict(user_info)
     return results
-
-if __name__ == '__main__':
-    app.run(debug=True)
