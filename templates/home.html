@@ -1,0 +1,24 @@
+ 
+<!DOCTYPE html>
+<html>
+  <head>
+    {% if title %}
+    <title>MedCab API- {{ title }}</title>
+    {% else %}
+    <title>MedCab API </title>
+    {% endif %}
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
+  </head>
+
+  <body>
+    <h1> Are you lost? </h1>
+
+    {% block content %}
+    <div class="border-top pt-3">
+            <small class="text=muted">
+                Need an account? <a class="ml-2" href="TheMainSite">you should be here!</a>
+            </small>
+        </div>
+    {% endblock %}
+  </body>
+</html>
