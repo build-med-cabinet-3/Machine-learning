@@ -16,6 +16,7 @@ google-cloud-bigquery = "*"
 python-decouple = "*"
 python-dotenv = "*"
 gunicorn = "*"
+pickle = "*"
 
 [requires]
 python_version = "3.7"
