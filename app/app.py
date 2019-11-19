@@ -60,6 +60,7 @@ def create_app():
         """
         user_input = user_input or request.values["user_input"]
         results = get_preds(user_input)
+        print(request.values)
         return jsonify(results)
     
     @app.errorhandler(404)

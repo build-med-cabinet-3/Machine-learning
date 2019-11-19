@@ -28,18 +28,20 @@ class Predictor():
 
         return vinput
 
-    def predict(self, user_input=None, size=5):
+    def predict(self, user_input=None, size=5, dist=True):
         if self.data_available(user_input):
             if user_input:
                 distances, indices = self.model.query(
                     self.transform(user_input),
-                    k=size)
-                return indices[0]
+                    k=size,
+                    return_distance=dist)
+                return indices[0], distances[0]
             else:
                 distances, indices = self.model.query(
                     self.vectorized_input,
-                    k=size)
-                return indices[0]
+                    k=size,
+                    return_distance=dist)
+                return indices[0], distances[0]
         else:
             raise Error
 
@@ -103,11 +105,11 @@ params = {
 # Load spacy model
 
 # Use if deploying to heroku.  manually add folder to base repo
-path_to_model = os.path.join(os.getcwd(), "en_core_web_md-2.2.0/")
+# path_to_model = os.path.join(os.getcwd(), "en_core_web_md-2.2.0/")
 
 # Use if local/pushing to github.  Requires installation of model via
 #    python -m spacy download en_core_web_md
-# path_to_model = "en_core_web_md"
+path_to_model = "en_core_web_md"
 
 nlp = spacy.load(path_to_model)
 
