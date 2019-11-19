@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from pickle import load
 
 
-
+#Ethan was here ;)
 # Configuration   
 load_dotenv() # To access .env
 def create_app():
@@ -18,11 +18,11 @@ def create_app():
     db = SQLAlchemy(app)
 
     #temp data
-    results = {"result_1": {"strain_id": 1, "score": 80},
-                "result_2": {"strain_id": 2, "score": 50},
-                "result_3": {"strain_id": 3, "score": 40},
-                "result_4": {"strain_id": 4, "score": 30},
-                "result_5": {"strain_id": 5, "score": 30}}
+    results = [{"strain_id": 1, "score": 80},
+                {"strain_id": 2, "score": 50},
+                {"strain_id": 3, "score": 40},
+                {"strain_id": 4, "score": 30},
+                {"strain_id": 5, "score": 30}]
 
     #temp "model"
     model = "pickled_model"
