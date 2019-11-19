@@ -26,6 +26,11 @@ def create_app():
                 {"strain_id": 4, "score": 30},
                 {"strain_id": 5, "score": 30}]
 
+    test_string = """The strain produces a citrus sweet, often described as red grapefruit,
+    flavor that is tinged with just a bit of diesel. Such a rare taste delivers a powerful
+    high that most often energizes users and activates their minds. """ 
+
+
 
     #temp "model"
     model = "pickled_model"
@@ -43,7 +48,7 @@ def create_app():
 
 
     @app.route("/request", methods=['GET', 'POST'])
-    def search(user_input=None):
+    def search(user_input=test_string):
         """Takes in user input and predicts top five recommended strains
         
         Keyword Arguments:
@@ -61,7 +66,7 @@ def create_app():
         user_input = user_input or request.values["user_input"]
         results = get_preds(user_input)
         print(request.values)
-        return jsonify(results)
+        return jsonify(results) 
     
     @app.errorhandler(404)
     def page_not_found(error):
