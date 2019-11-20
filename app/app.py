@@ -21,11 +21,10 @@ def create_app():
 
 
     #temp data
-    test_results = [{"strain_id": 1, "score": 80},
-                {"strain_id": 2, "score": 50},
-                {"strain_id": 3, "score": 40},
-                {"strain_id": 4, "score": 30},
-                {"strain_id": 5, "score": 30}]
+    test_results = [{1: [{'strain': 'afternoon-delight'},
+     {'effect': 'Creative Euphoric Focused Happy Relaxed Talkative Tingly Uplifted'},
+      {'medical_effect_plain': 'Pain relief Anorectic Inhibits bacteria Antiemetic Antiepileptic Reduces inflammation Aids sleep Inhibits cancer growth Suppresses muscle spasms Increases appetite Stimulates bone growth Reduces acid reflux'}, {'flavor': 'Apple Berry Citrus Diesel Earthy Fruity Nutty Pine Pungent Skunk Tropical'}, {'Type': 'hybrid'}, {'THC_Percent': '0.19'}, {'CBD': '0.09333333333333334'}, {'Description1': 'Afternoon Delight is a sativa dominant hybrid strain created through a cross of the insanely delicious'},
+      {'Score': 2.29822077}]}]
 
     test_string = """The strain produces a citrus sweet, often described as red grapefruit,
     flavor that is tinged with just a bit of diesel. Such a rare taste delivers a powerful
@@ -109,6 +108,9 @@ def create_app():
         pred_indices, pred_distances = nlpmodel.predict(user_input=user_info)
 
         return [pred_indices, pred_distances]
+
+    def decode(input_str):
+        return input_str.replace("%22", " ").replace("%20", "_").replace("%7B", "{").replace("%7D", "}")
     
 
     return app

@@ -34,15 +34,13 @@ class Predictor():
                 distances, indices = self.model.query(
                     self.transform(user_input),
                     k=size,
-                    return_distance=dist,
-                    dualtree=True)
+                    return_distance=dist)
                 return indices[0], distances[0]
             else:
                 distances, indices = self.model.query(
                     self.vectorized_input,
                     k=size,
-                    return_distance=dist,
-                    dualtree=True)
+                    return_distance=dist)
                 return indices[0], distances[0]
         else:
             raise Error
