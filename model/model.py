@@ -34,13 +34,15 @@ class Predictor():
             distances, indices = self.model.query(
                 self.transform(user_input),
                 k=size,
-                return_distance=dist)
+                return_distance=dist,
+                dualtree=True)
             return indices[0], distances[0]
         else:
             distances, indices = self.model.query(
                 self.vectorized_input,
                 k=size,
-                return_distance=dist)
+                return_distance=dist,
+                dualtree=True)
             return indices[0], distances[0]
         # else:
         #     raise Error
@@ -99,7 +101,7 @@ def load_file(file_key):
 ##################
 
 params = {
-    'model': 'kdtree_model.pkl'
+    'model': 'kdtree_model_1.2.pkl'
 }
 
 # Load spacy model
@@ -109,7 +111,7 @@ params = {
 
 # Use if local/pushing to github.  Requires installation of model via
 #    python -m spacy download en_core_web_md
-path_to_model = "en_core_web_md"
+path_to_model = "en_core_web_sm"
 
 nlp = spacy.load(path_to_model)
 
