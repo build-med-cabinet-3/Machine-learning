@@ -28,20 +28,22 @@ class Predictor():
 
         return vinput
 
-    def predict(self, user_input=None, size=5, return_distance=True):
-        if self.data_available(user_input):
-            if user_input:
-                distances, indices = self.model.query(
-                    self.transform(user_input),
-                    k=size)
-                return indices[0], distances[0]
-            else:
-                distances, indices = self.model.query(
-                    self.vectorized_input,
-                    k=size)
-                return indices[0], distances[0]
+    def predict(self, user_input=None, size=5, dist=True):
+        # if self.data_available(user_input):
+        if user_input:
+            distances, indices = self.model.query(
+                self.transform(user_input),
+                k=size,
+                return_distance=dist)
+            return indices[0], distances[0]
         else:
-            raise Error
+            distances, indices = self.model.query(
+                self.vectorized_input,
+                k=size,
+                return_distance=dist)
+            return indices[0], distances[0]
+        # else:
+        #     raise Error
 
     def data_available(self, user_input):
         if user_input is None and self.vectorized_input is None:
