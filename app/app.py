@@ -106,7 +106,7 @@ def create_app():
             list -- Predictions
         """
         nlpmodel = Predictor()
-        pred_indices, pred_distances = nlpmodel.predict(user_input=request.args['search'])
+        pred_indices, pred_distances = nlpmodel.predict(user_input=user_info)
 
         return [pred_indices, pred_distances]
     
