@@ -66,8 +66,8 @@ def create_app():
         """
 
         user_input = request.args['search']
-        # results = get_preds(user_input)
-        results = test_results
+        results = get_preds(user_input)
+        # results = test_results
         print(user_input)
         return str(results)
 
