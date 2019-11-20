@@ -4,9 +4,10 @@ from decouple import config
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from pickle import load
-
+from model.model import *
 
 #Ethan was here ;)
+#load app
 # Configuration   
 load_dotenv() # To access .env
 def create_app():
@@ -26,6 +27,11 @@ def create_app():
                 {"strain_id": 4, "score": 30},
                 {"strain_id": 5, "score": 30}]
 
+    test_string = """The strain produces a citrus sweet, often described as red grapefruit,
+    flavor that is tinged with just a bit of diesel. Such a rare taste delivers a powerful
+    high that most often energizes users and activates their minds. """ 
+
+
 
     #temp "model"
     model = "pickled_model"
@@ -42,8 +48,8 @@ def create_app():
         return render_template('home.html')
 
 
-    @app.route("/request", methods=['GET', 'POST'])
-    def search(user_input=None):
+    @app.route("/request/", methods=['GET', 'POST'])
+    def search(user_input=test_string):
         """Takes in user input and predicts top five recommended strains
         
         Keyword Arguments:
@@ -58,9 +64,13 @@ def create_app():
                           {"strain_id": 4, "score": 30},
                           {"strain_id": 5, "score": 30}]
         """
-        user_input = user_input or request.values["user_input"]
+
+        user_input = request.args['search']
         results = get_preds(user_input)
-        return jsonify(results)
+        print(user_input)
+        # print(request.args['search'])
+        # return jsonify(results) 
+        return str(results)
     
     @app.errorhandler(404)
     def page_not_found(error):
@@ -75,8 +85,10 @@ def create_app():
         Returns:
             list -- Predictions
         """
-        # return model.predict(user_info)
-        return results
+        nlpmodel = Predictor()
+        pred_indices, pred_distances = nlpmodel.predict(user_input=request.args['search'])
+
+        return [pred_indices, pred_distances]
     
 
     return app
