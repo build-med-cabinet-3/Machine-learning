@@ -88,7 +88,7 @@ def create_app():
         nlpmodel = Predictor()
         pred_indices, pred_distances = nlpmodel.predict(user_input=request.args['search'])
 
-        return [pred_indices, pred_distances
+        return [pred_indices, pred_distances]
     
 
     return app
