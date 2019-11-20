@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from pickle import load
 from model.model import *
+from .get_info import strain_info
 
 #Ethan was here ;)
 #load app
@@ -66,9 +67,12 @@ def create_app():
 
         user_input = request.args['search']
         results = get_preds(user_input)
+        # info = strain_info(results[0], results[1])
         # results = test_results
+        
         print(user_input)
-        return str(results)
+        return jsonify(results)
+        # return info
 
     @app.route("/test/", methods=['GET', 'POST'])
     def test_search(user_input=test_string):
@@ -89,7 +93,11 @@ def create_app():
 
         user_input = request.args['search']
         print(user_input)
-        return jsonify(test_results, user_input) 
+        results1 = [1237, 1131, 780, 1418, 127]
+        results2 = [2.29822077, 2.3112716 , 2.31566792, 2.31842484, 2.3206283]
+        info = strain_info(results1, results2)
+        return jsonify(info)
+        # return jsonify(test_results, user_input, info) 
     
     @app.errorhandler(404)
     def page_not_found(error):
