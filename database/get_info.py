@@ -26,7 +26,8 @@ def strain_info(id_list, distance_list):
     #Creating a list then adding key-value-pairs to said list
     # ends by appending the key-value-pair list to another list as a key-value-pair 
     for i in range(0, 5):
-        strain_list = []
+        strain_list = {}
+        strain_list['Recommendation'] = i + 1
         for item in needed_columns:
             request = f'SELECT {item} FROM strain_info WHERE id = {id_list[i]};'
             value = str(sl_curs.execute(request).fetchall())
@@ -39,10 +40,8 @@ def strain_info(id_list, distance_list):
             value = value.replace('(', '')
             value = value.replace(',', '')
             value = value.replace("'", '')
-            feature = {item: value}
-            strain_list.append(feature)
-        score = {'Score': distance_list[i]}
-        strain_list.append(score)
-        return_list.append({i+1: strain_list})
+            strain_list[item] = value
+        strain_list['Score'] = distance_list[i]
+        return_list.append(strain_list)
     sl_curs.close()
     return return_list
