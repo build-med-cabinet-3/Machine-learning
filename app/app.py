@@ -4,9 +4,7 @@ from decouple import config
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from pickle import load
-# from model import model
-
-# Predictor = model.Predictor()
+from model.model import *
 
 #Ethan was here ;)
 # Configuration   
@@ -70,7 +68,8 @@ def create_app():
         results = get_preds(user_input)
         print(user_input)
         # print(request.args['search'])
-        return jsonify(results) 
+        # return jsonify(results) 
+        return str(results)
     
     @app.errorhandler(404)
     def page_not_found(error):
@@ -85,9 +84,10 @@ def create_app():
         Returns:
             list -- Predictions
         """
-        # pred_distances, pred_indices = Predictor.predict(request.args['search'])
+        nlpmodel = Predictor()
+        pred_distances, pred_indices = nlpmodel.predict(user_input=request.args['search'])
 
-        return results
+        return [pred_distances, pred_indices]
     
 
     return app
