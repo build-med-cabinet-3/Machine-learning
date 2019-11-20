@@ -21,7 +21,7 @@ def create_app():
 
 
     #temp data
-    results = [{"strain_id": 1, "score": 80},
+    test_results = [{"strain_id": 1, "score": 80},
                 {"strain_id": 2, "score": 50},
                 {"strain_id": 3, "score": 40},
                 {"strain_id": 4, "score": 30},
@@ -66,11 +66,31 @@ def create_app():
         """
 
         user_input = request.args['search']
-        results = get_preds(user_input)
+        # results = get_preds(user_input)
+        results = test_results
         print(user_input)
-        # print(request.args['search'])
-        # return jsonify(results) 
         return str(results)
+
+    @app.route("/test/", methods=['GET', 'POST'])
+    def test_search(user_input=test_string):
+        """Takes in user input and predicts top five recommended strains
+        
+        Keyword Arguments:
+            user_input {str} -- [effects, ailments, and flavors to pass to model ]
+             (default: {None})
+        
+        Returns:
+            [ARRAY] -- Returns a List of recommended strains, and a score of recommendation strength
+            [EXAMPLE:] -- [{"strain_id": 1, "score": 80},
+                          {"strain_id": 2, "score": 50},
+                          {"strain_id": 3, "score": 40},
+                          {"strain_id": 4, "score": 30},
+                          {"strain_id": 5, "score": 30}]
+        """
+
+        user_input = request.args['search']
+        print(user_input)
+        return jsonify(test_results, user_input) 
     
     @app.errorhandler(404)
     def page_not_found(error):
