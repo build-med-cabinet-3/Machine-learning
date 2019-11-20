@@ -4,7 +4,9 @@ from decouple import config
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from pickle import load
+# from model import model
 
+# Predictor = model.Predictor()
 
 #Ethan was here ;)
 # Configuration   
@@ -47,7 +49,7 @@ def create_app():
         return render_template('home.html')
 
 
-    @app.route("/request", methods=['GET', 'POST'])
+    @app.route("/request/", methods=['GET', 'POST'])
     def search(user_input=test_string):
         """Takes in user input and predicts top five recommended strains
         
@@ -63,9 +65,11 @@ def create_app():
                           {"strain_id": 4, "score": 30},
                           {"strain_id": 5, "score": 30}]
         """
-        user_input = user_input or request.values["user_input"]
+
+        user_input = request.args['search']
         results = get_preds(user_input)
-        print(request)
+        print(user_input)
+        # print(request.args['search'])
         return jsonify(results) 
     
     @app.errorhandler(404)
@@ -81,7 +85,8 @@ def create_app():
         Returns:
             list -- Predictions
         """
-        # return model.predict(user_info)
+        # pred_distances, pred_indices = Predictor.predict(request.args['search'])
+
         return results
     
 
