@@ -49,7 +49,7 @@ def create_app():
 
 
     @app.route("/request/", methods=['GET', 'POST'])
-    def search(user_input=test_string):
+    def search(user_input=None):
         """Takes in user input and predicts top five recommended strains
         
         Keyword Arguments:
@@ -64,6 +64,15 @@ def create_app():
                           {"strain_id": 4, "score": 30},
                           {"strain_id": 5, "score": 30}]
         """
+<<<<<<< HEAD
+        user_input = str(request.args['search'])
+        decoded = decode(user_input)
+        results = get_preds(decoded)
+        indices = results[0]
+        distances = results[1]
+        strain_list = strain_info(distances, indices)
+        return jsonify(strain_list)
+=======
 
         user_input = request.args['search']
         results = get_preds(user_input)
@@ -73,6 +82,7 @@ def create_app():
         print(user_input)
         # return str(results)
         return jsonify(info)
+>>>>>>> 0fbbba65856f85e0fc804bae078b6f2b371ec524
 
     @app.route("/test/", methods=['GET', 'POST'])
     def test_search(user_input=test_string):
@@ -113,12 +123,11 @@ def create_app():
             list -- Predictions
         """
         nlpmodel = Predictor()
-        pred_indices, pred_distances = nlpmodel.predict(user_input=user_info)
+        pred_distances, pred_indices = nlpmodel.predict(user_input=user_info)
 
         return [pred_indices, pred_distances]
 
     def decode(input_str):
-        return input_str.replace("%22", " ").replace("%20", "_").replace("%7B", "{").replace("%7D", "}")
+        return input_str.replace("%22", " ").replace("%20", " ").replace("%7B", " ").replace("%7D", " ")
     
-
     return app
