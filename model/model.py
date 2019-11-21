@@ -19,7 +19,7 @@ class Predictor():
     def __init__(self, model=None, vectorizer=None):
         self.model = load_file('model')
         self.vectorizer = Vectorizer()
-
+        
     def transform(self, raw_input, verbose=False):
         self.raw_input = raw_input
         vinput = self.vectorizer.transform(raw_input).reshape(1, -1)
@@ -28,19 +28,17 @@ class Predictor():
 
         return vinput
 
-    def predict(self, user_input=None, size=5, dist=True):
+    def predict(self, user_input=None, size=5):
         if self.data_available(user_input):
             if user_input:
                 distances, indices = self.model.query(
                     self.transform(user_input),
-                    k=size,
-                    return_distance=dist)
+                    k=size)
                 return indices[0], distances[0]
             else:
                 distances, indices = self.model.query(
                     self.vectorized_input,
-                    k=size,
-                    return_distance=dist)
+                    k=size)
                 return indices[0], distances[0]
         else:
             raise Error
@@ -117,23 +115,6 @@ nlp = spacy.load(path_to_model)
 ###Spacy filter/tokenizer###
 ############################
 
-# Wrap filter/tokenizer
-def filter_data(func):
-    def wrapper(text):
-        return filter_doc(func(text))
-    return wrapper
-
-# Filter on stop_words
-def filter_doc(doc):
-    filtered_sentence = []
-    for word in doc:
-        lexeme = doc.vocab[word.text]
-        if lexeme.is_stop == False:
-            if word.is_punct == False:
-                filtered_sentence.append(word.text)
-    return Doc(nlp.vocab, filtered_sentence,[True]*len(filtered_sentence))  # Use to return a spacy.tokens.Doc
-
-@filter_data
 def tokenize_text(text):
     return nlp(text)
 

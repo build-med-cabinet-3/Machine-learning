@@ -67,12 +67,12 @@ def create_app():
 
         user_input = request.args['search']
         results = get_preds(user_input)
-        # info = strain_info(results[0], results[1])
-        # results = test_results
+        info = strain_info(results[0], results[1])
+        
         
         print(user_input)
-        return jsonify(results)
-        # return info
+        # return str(results)
+        return jsonify(info)
 
     @app.route("/test/", methods=['GET', 'POST'])
     def test_search(user_input=test_string):
